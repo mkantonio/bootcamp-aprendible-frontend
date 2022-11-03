@@ -1,9 +1,22 @@
 import Link from "next/link";
 
-const BookList = () => {
+export async function getStaticProps() {
+
+    const res = await fetch('http://localhost:8000/api/books')
+
+    console.log(res)
+
+    return {
+        props: {
+            books: []
+        }
+    }
+}
+
+const BookList = ({ books }) => {
     return (
         <div>
-
+            <pre> { JSON.stringify(books) } </pre>
             <h1>Libros</h1>
 
             <ul>

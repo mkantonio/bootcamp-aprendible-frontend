@@ -1,9 +1,11 @@
 import Link from "next/link";
 import {useState} from "react";
+import {useRouter} from "next/router";
 
 const BookCreate = () => {
-
+    const router = useRouter()
     const [bookTitle, setBookTitle] = useState('')
+    const [errors, setErrors] = useState([]);
 
     async function handleSubmit(e){
         e.preventDefault();
@@ -17,7 +19,14 @@ const BookCreate = () => {
                 title: bookTitle
             })
         })
-        console.log(res)
+        if (res.ok){
+            setErrors([])
+            setBookTitle('')
+            return router.push('/libros')
+
+        }
+        const data = await res.json();
+        setErrors(data.errors);
     }
 
     return (
@@ -30,6 +39,13 @@ const BookCreate = () => {
                     value={bookTitle}
                     type="text"/>
                 <button>Enviar</button>
+
+                {errors.title && (
+                    <span style={{
+                        color: 'red', display: 'block'
+                    }}>{errors.title}</span>
+                )}
+
             </form>
             <br/>
             <Link href="/libros">Book List</Link>

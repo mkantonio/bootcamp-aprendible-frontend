@@ -3,22 +3,31 @@ import {useState} from "react";
 
 const BookCreate = () => {
 
-    const [bookName, setBookName] = useState('')
+    const [bookTitle, setBookTitle] = useState('')
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
         e.preventDefault();
-
-        console.log(bookName)
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`, {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: bookTitle
+            })
+        })
+        console.log(res)
     }
 
     return (
         <>
             <h1>BookCreate</h1>
-            <p>{bookName}</p>
+            <p>{bookTitle}</p>
             <form onSubmit={handleSubmit}>
                 <input
-                    onChange={(e) => setBookName(e.target.value)}
-                    value={bookName}
+                    onChange={(e) => setBookTitle(e.target.value)}
+                    value={bookTitle}
                     type="text"/>
                 <button>Enviar</button>
             </form>

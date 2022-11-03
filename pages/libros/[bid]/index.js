@@ -7,7 +7,7 @@ export async function getStaticProps({ params }) {
     export async function getStaticProps(context) {
         const res = await fetch(`http://localhost:8000/api/books/${context.params.bid}`)
      */
-    const res = await fetch(`http://localhost:8000/api/books/${params.bid}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/${params.bid}`)
     const data = await res.json();
 
     return {
@@ -18,7 +18,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths(){
-    const res = await fetch('http://localhost:8000/api/books')
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books`)
     const data = await res.json()
 
     return {

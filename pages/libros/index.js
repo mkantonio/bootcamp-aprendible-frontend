@@ -17,11 +17,14 @@ export async function getStaticProps() {
 const BookList = ({ books }) => {
     return (
         <div>
-            <pre> { JSON.stringify(books) } </pre>
+            {/*<pre> { JSON.stringify(books) } </pre>*/}
             <h1>Libros</h1>
 
             <ul>
-                <li> Libro 1</li>
+                {books.map(book => (
+                    <li key={`book- +${book.id}`}>{book.title}</li>
+
+                ))}
             </ul>
 
             <Link href="/libros/crear">Create Book</Link>

@@ -4,11 +4,12 @@ export async function getStaticProps() {
 
     const res = await fetch('http://localhost:8000/api/books')
 
-    console.log(res)
+    const data = await res.json();
+    console.log(data)
 
     return {
         props: {
-            books: []
+            books: data
         }
     }
 }
